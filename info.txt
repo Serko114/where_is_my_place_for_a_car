@@ -1,0 +1,22 @@
+
+---------------------------------------------------------------------------------------
+параметры, которые нужно добавить для подсоединения к git первый раз:
+    git config --global --list
+    git config --global user.name "Konstantin Seregin"
+    git config --global user.email "kraken114@bk.ru"
+
+проверка:
+        PS D:\PROJECTS\where_is_my_place_for_a_car> git config user.name
+Konstantin Seregin
+        PS D:\PROJECTS\where_is_my_place_for_a_car> git config user.email
+kraken114@bk.ru
+---------------------------------------------------------------------------------------
+Здесь можно сократить путь в командной строке:
+        C:\Users\Serko114\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+
+        вставить вот это в файл:
+        function prompt {
+                $p = Split-Path -leaf -path (Get-Location)
+                "$p> "
+        }
+---------------------------------------------------------------------------------------
