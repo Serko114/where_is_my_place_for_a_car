@@ -1,0 +1,7 @@
+ultralytics
+opencv-python-headless
+opencv-python
+shapely
+psycopg2-binary
+hydra-core
+Flask
