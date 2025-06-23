@@ -1,7 +1,14 @@
+# torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 ultralytics
+
 opencv-python-headless
 opencv-python
 shapely
 psycopg2-binary
 hydra-core
 Flask
+seaborn
+# для Unet:
+segmentation_models_pytorch
+albumentations
+streamlit #==1.29.0

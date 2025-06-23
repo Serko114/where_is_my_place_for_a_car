@@ -20,3 +20,31 @@ kraken114@bk.ru
                 "$p> "
         }
 ---------------------------------------------------------------------------------------
+
+ffmpeg -i training_model/video/video.mp4 -vf fps=3.0 training_model/images_train/1_150624_img%03d.png
+
+data/video/15_06_25/1_VID_20250614_232107.mp4
+data/pics/15_06_25/
+
+1_VID_20250614_232107.mp4
+ffmpeg -i data/video/15_06_25/1_VID_20250614_232107.mp4 -vf fps=0.5 data/pics/15_06_25/1_150624_img%03d.png
+2_VID_20250615_064803.mp4
+ffmpeg -i data/video/15_06_25/2_VID_20250615_064803.mp4 -vf fps=0.5 data/pics/15_06_25/2_150624_img%03d.png
+3_VID_20250615_181247.mp4
+ffmpeg -i data/video/15_06_25/3_VID_20250615_181247.mp4 -vf fps=0.7 data/pics/15_06_25/3_150624_img%03d.png
+4_VID_20250615_190310.mp4
+ffmpeg -i data/video/15_06_25/4_VID_20250615_190310.mp4 -vf fps=1.0 data/pics/15_06_25/4_150624_img%03d.png
+5_VID_20250615_211837.mp4
+ffmpeg -i data/video/15_06_25/5_VID_20250615_211837.mp4 -vf fps=0.5 data/pics/15_06_25/5_150624_img%03d.png
+6_VID_20250615_223018.mp4
+ffmpeg -i data/video/15_06_25/6_VID_20250615_223018.mp4 -vf fps=1.2 data/pics/15_06_25/6_150624_img%03d.png
+7_VID_20250615_230216.mp4
+ffmpeg -i data/video/15_06_25/7_VID_20250615_230216.mp4 -vf fps=0.5 data/pics/15_06_25/7_150624_img%03d.png
+8_VID_20250616_221657.mp4
+ffmpeg -i data/video/15_06_25/8_VID_20250616_221657.mp4 -vf fps=0.5 data/pics/15_06_25/8_150624_img%03d.png
+9_VID_20250616_224339.mp4
+ffmpeg -i data/video/15_06_25/9_VID_20250616_224339.mp4 -vf fps=1.0 data/pics/15_06_25/9_150624_img%03d.png
+10_VID_20250617_072335.mp4
+ffmpeg -i data/video/15_06_25/10_VID_20250617_072335.mp4 -vf fps=1.0 data/pics/15_06_25/10_150624_img%03d.png
+11_VID_20250617_074153.mp4
+ffmpeg -i data/video/15_06_25/11_VID_20250617_074153.mp4 -vf fps=4.5 data/pics/15_06_25/11_150624_img%03d.png
