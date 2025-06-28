@@ -1,0 +1,10 @@
+/Train/140625_1_004.png Trainannot/140625_1_004.png
+/Train/130625_1_002.png Trainannot/130625_1_002.png
+/Train/130625_2_001.png Trainannot/130625_2_001.png
+/Train/130625_2_008.png Trainannot/130625_2_008.png
+/Train/8_150624_img001.png Trainannot/8_150624_img001.png
+/Train/7_150624_img001.png Trainannot/7_150624_img001.png
+/Train/5_150624_img004.png Trainannot/5_150624_img004.png
+/Train/4_150624_img003.png Trainannot/4_150624_img003.png
+/Train/3_150624_img003.png Trainannot/3_150624_img003.png
+/Train/2_150624_img002.png Trainannot/2_150624_img002.png
