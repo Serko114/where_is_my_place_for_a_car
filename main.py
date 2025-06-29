@@ -10,6 +10,7 @@ from nodes.SendInfoDBNode import SendInfoDBNode
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def main(config) -> None:
     video_reader = VideoReader(config["video_reader"])
+    segmentation_node = SegmentationNodes(config)
     detection_node = DetectionTrackingNodes(config)
     show_detection_node = VideoShowDetection(config)
     # SendInfoDBNode(config)
