@@ -3,4 +3,8 @@ data/video_для_детекции
 data/фото_для_детекции
 data/фото_для_сегментации
 runs
-
+outputs
+nodes/__pycache__
+elements/__pycache__
+models/best_model_new.pth
+models/best_model_new.pt

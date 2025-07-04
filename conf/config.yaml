@@ -4,13 +4,29 @@
 # -------------detection, tracking noda: VideoReader.py------------------------------------------
 pipeline:
   save_video : False  # Сохранение итогового видео обработки
-  send_info_db: True  # Сохраняем ли инфо в бд (требуется заранее запустить микросервисы если ставите True)
+  send_info_db: False  # Сохраняем ли инфо в бд (требуется заранее запустить микросервисы если ставите True)
   video_show : False
 
 video_reader:
-  src: video/video.mp4 #${oc.env:VIDEO_SRC} # путь до файла обработки или номер камеры (int) или ссылки на m3u8 / rtsp поток
+  src: 10_VID.mp4 #video/10_VID.mp4 #${oc.env:VIDEO_SRC} # путь до файла обработки или номер камеры (int) или ссылки на m3u8 / rtsp поток
   # skip_secs : 0  # считываем кадры раз в <skip_secs> секунд
   # roads_info: ${oc.env:ROADS_JSON} # json файл с координатами дорог на видео
+
+# -------------segmentation noda: SegmentationNodes.py------------------------------------------
+segmentation_node:
+  weight_pth: models/best_segmentation.pt  # Путь до модели .pt или .engine (TensorRT)
+  classes_to_segment: ["background", "ground", "no_car"]  # весь транспорт из классов COCO
+  colors_imshow: {"background" : [0, 0, 0],"ground" : [204, 153, 51],
+        "no_car" : [255, 96, 55]
+    }
+  ENCODER: 'resnet18'
+  ENCODER_WEIGHTS: 'imagenet'
+  # confidence: 0.10  # Порог уверенности детектора (чем больше значение, тем меньше находит)
+  # iou: 0.7  # Порог NMS (чем больше значение, тем больше находит)
+  # imgsz: 640  # Ресайз при инференсе (640 по умолчанию)
+  # dict_clsses: {'calm':0, 'joyful':1, 'delighted':2, 'surprised':3, 'sad':4, 'evil':5}
+
+
 
 # -------------detection, tracking noda: DetectionTrackingNodes.py------------------------------------------
 detection_node:

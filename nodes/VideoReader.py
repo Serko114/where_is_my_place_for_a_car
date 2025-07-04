@@ -1,6 +1,7 @@
 from typing import Generator
 import cv2
 from elements.FrameElement import FrameElement
+from elements.VideoEndBreakElement import FrameElement
 import numpy as np
 
 
@@ -17,7 +18,9 @@ class VideoReader:
         frame_num = 0
         while True:
             ret, frame = self.stream.read()
-            # print(frame.shape)
+            print(frame.shape)
+            print(frame.dtype)
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame_width = frame.shape[1]
             frame_height = frame.shape[0]
             frame_num += 1
@@ -29,5 +32,5 @@ class VideoReader:
             #     break
             # cv2.waitKey(1)
 # -----------------------конец блока 'для просмотра видео'------
-            print(frame_num)
+            print(f'frame: {frame.dtype}')
             yield FrameElement(source, frame, frame_num, frame_width, frame_height)

@@ -12,6 +12,11 @@ class FrameElement:
         frame_width: int,
         frame_height: int,
         frame_result: np.ndarray | None = None,
+
+        # segmentation
+        frame_pr_mask: np.ndarray | None = None,
+
+
         # detection
         detected_conf: list | None = None,
         detected_cls: list | None = None,
@@ -31,6 +36,9 @@ class FrameElement:
         self.frame_width = frame_width  # ширина кадра
         self.frame_height = frame_height  # ширина кадра
         self.frame_result = frame_result  # Итоговый обработанный кадр
+        # ------detection-------
+        self.frame_pr_mask = frame_pr_mask
+
         # ------detection-------
         # Список уверенностей задетектированных объектов
         self.detected_conf = detected_conf
