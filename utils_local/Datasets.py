@@ -1,10 +1,11 @@
 from utils_local.Datasets import *  # Dataset  # as BaseDataset
 from utils_local.utils import get_validation_augmentation as augmentation
+from torch.utils.data import Dataset as BaseDataset
 import numpy as np
 import cv2
 
 
-class Dataset:
+class Dataset(BaseDataset):
     def __init__(
         self,
         images_dir,

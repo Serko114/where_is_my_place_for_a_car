@@ -5,9 +5,10 @@ import cv2
 
 # from utils_local.utils import profile_time
 from utils_local.utils import get_validation_augmentation as gva
-from utils_local.utils import get_validation_augmentation as gva
+# from utils_local.utils import get_validation_augmentation as gva
 from utils_local.utils import visualize_multichennel_mask
 from utils_local.utils import get_preprocessing
+from utils_local.utils import visualize_predicts
 
 from utils_local.Datasets import Dataset
 
@@ -28,12 +29,15 @@ class SegmentationNodes:
 
         config_yolo = config["segmentation_node"]
         self.colors_imshow = config_yolo["colors_imshow"]
-        self.encoder = config_yolo['ENCODER']
-        self.encoder_weights = config_yolo['ENCODER_WEIGHTS']
+        # self.encoder = config_yolo['ENCODER']
+        # self.encoder_weights = config_yolo['ENCODER_WEIGHTS']
         self.preprocessing_fn = smp.encoders.get_preprocessing_fn(
             'resnet18', 'imagenet')
         self.best_model = torch.jit.load(
             'models/best_segmentation.pt', map_location=DEVICE)
+
+    def to_tensor(x, **kwargs):
+        return x.transpose(2, 0, 1).astype('float32')
 
     def process(self, frame_element: FrameElement) -> FrameElement:
         # Выйти из обработки если это пришел VideoEndBreakElement а не FrameElement
@@ -54,18 +58,35 @@ class SegmentationNodes:
         # preprocessing_fn = smp.encoders.get_preprocessing_fn(
         #     self.encoder, self.encoder_weights)
         DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+        # preprocessing_fn = smp.encoders.get_preprocessing_fn(
+        #     'resnet18', 'imagenet')
         dataset = Dataset(frame, 'utils_local/костыль.png', augmentation=gva(), preprocessing=get_preprocessing(self.preprocessing_fn)
                           )
         # test_dataset = Dataset(frame, 'utils_local/костыль.png', augmentation=gva,
         #                        preprocessing=get_preprocessing(preprocessing_fn))
         indx = np.random.randint(len(dataset))
-        image, mask = dataset[indx]
+        image, mask_gt = dataset[indx]
+
         # visualize_multichennel_mask(image, mask)
         print(f'это кратинка{image.shape, image.dtype}: {image}')
+        # .transpose(2, 0, 1).astype('float32')
+        # x_tensor = image.transpose(2, 0, 1).astype('float32')
         x_tensor = torch.from_numpy(image).to(DEVICE).unsqueeze(0)
         print(
             f'это кратинка для модели{x_tensor.shape, image.dtype}: {x_tensor}')
+        # '-'
+        # '-'
+        # '-'
+        # '-'
+        pr_mask = self.best_model(x_tensor)
+        pr_mask = pr_mask.squeeze().cpu().detach().numpy()
+        label_mask = np.argmax(pr_mask, axis=0)
+        print(label_mask.shape, image.shape, mask_gt.shape)
+        print(
+            f'это МАСКА: {label_mask.shape, label_mask.dtype}: {label_mask}')
+        real, pre = visualize_predicts(image, np.argmax(
+            mask_gt, axis=0), label_mask, normalized=True)
+
         # '-'
         # '-'
         # '-'
@@ -93,7 +114,7 @@ class SegmentationNodes:
         # cv2.imshow('dsd', image)
         # if cv2.waitKey(1) & 0xFF == ord('q'):
         #     break
-        cv2.waitKey(1)
+        # cv2.waitKey(1)
         # frame_pr_mask = frame_element.frame_pr_mask.cpu()
         #       print(
         #   f'-------------------{np.array(mask.detach().cpu()).shape}-----------------------------')
