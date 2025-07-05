@@ -148,6 +148,9 @@ def _convert_multichannel2singlechannel(mc_mask: np.ndarray):
 
     title = "Площади: " + \
         "\n".join([f"{cls}: {square_ratios[cls]*100:.1f}%" for cls in CLASSES])
+    # title = "Площади: " + \
+    #     "\n".join(
+    #         [f"{cls}: {square_ratios[cls]*100:.1f}%" for cls in CLASSES])
     return sc_mask, title
 
 

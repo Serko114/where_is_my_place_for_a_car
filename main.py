@@ -28,11 +28,16 @@ def main(config) -> None:
 
     for frame_element in video_reader.process():
         frame_element = segmentation_node.process(frame_element)
+        if frame_element.coeff > 0.58:
+            print(
+                f'Возможно пустых мест нет, идем в следующий контур YOLOv8-obb, данные в БД не отправляем.')
+        else:
+            print(f'Места свободные есть, данные отправляем в БД.')
         # # print('FUCK111!')
 
         # if send_info_db:
         #     frame_element = send_info_db_node.process(frame_element)
-        print('FUCK222!')
+        # print('FUCK222!')
     # frame_element = show_detection_node.process(frame_element)
     # if video_show:
     #     show_detection_node.process(frame_element)

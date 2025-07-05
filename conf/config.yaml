@@ -21,10 +21,6 @@ segmentation_node:
     }
   ENCODER: 'resnet18'
   ENCODER_WEIGHTS: 'imagenet'
-  # confidence: 0.10  # Порог уверенности детектора (чем больше значение, тем меньше находит)
-  # iou: 0.7  # Порог NMS (чем больше значение, тем больше находит)
-  # imgsz: 640  # Ресайз при инференсе (640 по умолчанию)
-  # dict_clsses: {'calm':0, 'joyful':1, 'delighted':2, 'surprised':3, 'sad':4, 'evil':5}
 
 
 
