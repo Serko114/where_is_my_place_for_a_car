@@ -24,17 +24,17 @@ class DetectionTrackingNodes:
         self.classes_to_detect = config_yolo["classes_to_detect"]
         self.dict_clsses = config_yolo["dict_clsses"]
 
-        config_bytetrack = config["tracking_node"]
+        # config_bytetrack = config["tracking_node"]
 
         # ByteTrack param
-        first_track_thresh = config_bytetrack["first_track_thresh"]
-        second_track_thresh = config_bytetrack["second_track_thresh"]
-        match_thresh = config_bytetrack["match_thresh"]
-        track_buffer = config_bytetrack["track_buffer"]
-        fps = 30  # ставим равным 30 чтобы track_buffer мерился в кадрах
-        self.tracker = ByteTracker(
-            fps, first_track_thresh, second_track_thresh, match_thresh, track_buffer, 1
-        )
+        # first_track_thresh = config_bytetrack["first_track_thresh"]
+        # second_track_thresh = config_bytetrack["second_track_thresh"]
+        # match_thresh = config_bytetrack["match_thresh"]
+        # track_buffer = config_bytetrack["track_buffer"]
+        # fps = 30  # ставим равным 30 чтобы track_buffer мерился в кадрах
+        # self.tracker = ByteTracker(
+        #     fps, first_track_thresh, second_track_thresh, match_thresh, track_buffer, 1
+        # )
 
     @profile_time
     def process(self, frame_element: FrameElement) -> FrameElement:
