@@ -27,7 +27,7 @@ class FrameElement:
         tracked_xyxy: list[list] | None = None,
         id_list: list | None = None,
         cls_id: list | None = None,
-        # далее
+        detect_count: int | None = None,
 
 
     ) -> None:
@@ -53,5 +53,6 @@ class FrameElement:
         self.id_list = id_list  # Список обнаруженных id трекуемых объектов
         # Список по числу классов, двоичная хрень, типа [0, 0, 1, 0, 0, 0] для подачи в DB
         self.cls_id = cls_id
+        self.detect_count = detect_count
         # -----------------------
         self.send_info_of_frame_to_db = True
