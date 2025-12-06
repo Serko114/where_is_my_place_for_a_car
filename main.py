@@ -2,6 +2,7 @@ import hydra
 from nodes.VideoReader import VideoReader
 from nodes.SegmentationNodes import SegmentationNodes
 from nodes.DetectionNodes import DetectionNodes
+from nodes.VideoShow import VideoShowDetection
 # from nodes.VideoShow import VideoShowDetection
 # from nodes.VideoSaverNode import VideoSaverNode
 # from nodes.SendInfoDBNode import SendInfoDBNode
@@ -13,6 +14,7 @@ def main(config) -> None:
     video_reader = VideoReader(config["video_reader"])
     segmentation_node = SegmentationNodes(config)
     detectiom_node = DetectionNodes(config)
+    show_node = VideoShowDetection(config)
     # detection_node = DetectionTrackingNodes(config)
     # show_detection_node = VideoShowDetection(config)
     # SendInfoDBNode(config)
@@ -29,6 +31,7 @@ def main(config) -> None:
 
     for frame_element in video_reader.process():
         frame_element = segmentation_node.process(frame_element)
+
         if frame_element.coeff > 0.58:
             print(
                 f'Возможно пустых мест нет, идем в следующий контур YOLOv8-obb, данные в БД не отправляем.')
@@ -36,7 +39,7 @@ def main(config) -> None:
         else:
             print(f'Места свободные есть, данные отправляем в БД.')
         # # print('FUCK111!')
-
+        frame_element = show_node.process(frame_element)
         # if send_info_db:
         #     frame_element = send_info_db_node.process(frame_element)
         # print('FUCK222!')

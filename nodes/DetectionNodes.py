@@ -47,20 +47,20 @@ class DetectionNodes:
         frame_element.detected_conf = outputs[0].obb.conf.cpu().tolist()
         frame_element.detected_cls = outputs[0].obb.cls.cpu().int().tolist()
         # frame_element.detected_cls = [self.classes[i] for i in detected_cls]
-        frame_element.detected_xyxyxyxy = outputs[0].obb.xyxyxyxy.cpu(
+        frame_element.detected_xyxy = outputs[0].obb.xyxyxyxy.cpu(
         ).int().tolist()
         self.detect_count = len(outputs[0].obb.conf.cpu().tolist())
 
         # -------------------------------------------------------------
         print(f'detected_conf: {outputs[0].obb.conf.cpu().tolist()} \
                 detected_cls: {outputs[0].obb.cls.cpu().int().tolist()} \
-                detected_xyxyxyxy: {outputs[0].obb.xyxyxyxy.cpu().int().tolist()} \
+                detected_xyxy: {outputs[0].obb.xyxyxyxy.cpu().int().tolist()} \
                 detect_count:{len(outputs[0].obb.conf.cpu().tolist())}')
 
         # ------------------смотрим картинку-------------------------------------------
-        annotated_frame = outputs[0].plot()
-        annotated_frame = cv2.cvtColor(annotated_frame, cv2.COLOR_BGR2RGB)
-        plt.imshow(annotated_frame)
-        plt.show()
+        # annotated_frame = outputs[0].plot()
+        # annotated_frame = cv2.cvtColor(annotated_frame, cv2.COLOR_BGR2RGB)
+        # plt.imshow(annotated_frame)
+        # plt.show()
         # -------------------------------------------------------------
         return frame_element

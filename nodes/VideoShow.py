@@ -2,7 +2,7 @@ from typing import Generator
 import cv2
 import random
 from elements.FrameElement import FrameElement
-from utils_local.utils import profile_time, FPS_Counter
+# from utils_local.utils import profile_time, FPS_Counter
 # from FrameElement import FrameElement
 import numpy as np
 
@@ -30,6 +30,21 @@ class VideoShowDetection:
         self.width_window = 700  # ширина экрана в пикселях
         # self.save_video = config_show_node["save_video"]
 
+    def int_list(self, lst):
+        # переделывает список списков [[306.00482 190.75961]
+        # [318.99518 183.25961]
+        # [333.99518 209.24039]
+        # [321.00482 216.74039]]
+        #  в массив array с целыми числами
+        a = []
+        # b = []
+        for i in lst:
+            c = []
+            for j in i:
+                c.append(int(j))
+            a.append([c])
+        return np.array(a)
+
     def process(self, frame_element: FrameElement, fps_counter=None) -> FrameElement:
         # --------блок - смоткрим видео без рамки------------------
         # frame = frame_element.frame.copy()
@@ -44,17 +59,21 @@ class VideoShowDetection:
             for box, class_name in zip(frame_element.detected_xyxy, frame_element.detected_cls):
                 x1, y1, x2, y2 = box
                 # Отрисовка прямоугольника
-                cv2.rectangle(frame_result, (x1, y1), (x2, y2), (0, 0, 0), 2)
+                # cv2.rectangle(frame_result, (x1, y1), (x2, y2), (0, 0, 0), 2)
+                # ------------------------------------------
+                box = self.int_list(box)
+                cv2.drawContours(frame_result, [box], 0, (0, 0, 255), 2)
+                # ------------------------------------------
                 # Добавление подписи с именем класса
-                cv2.putText(
-                    frame_result,
-                    class_name,
-                    (x1, y1 - 10),
-                    fontFace=self.fontFace,
-                    fontScale=self.fontScale,
-                    thickness=self.thickness,
-                    color=(0, 0, 255),
-                )
+                # cv2.putText(
+                #     frame_result,
+                #     class_name,
+                #     (x1, y1 - 10),
+                #     fontFace=self.fontFace,
+                #     fontScale=self.fontScale,
+                #     thickness=self.thickness,
+                #     color=(0, 0, 255),
+                # )
         else:
             # Отображение результатов трекинга:
             for box, class_name, id in zip(
@@ -80,7 +99,8 @@ class VideoShowDetection:
                     color=(0, 0, 255),
                 )
         frame_element.frame_result = frame_result
-        frame_show = frame_result
+        frame_show = cv2.cvtColor(frame_result, cv2.COLOR_RGB2BGR)
+        # frame_show = frame_result
         # frame_show = cv2.resize(frame_result.copy(),
         #                         (-1, -1), fx=self.scale, fy=self.scale)
         # --------------- блок записи видео для readme ------------------
@@ -97,6 +117,7 @@ class VideoShowDetection:
         #     out.write(frame_show)
         # ---------------------------------------------------------------
         if self.imshow:
+
             cv2.imshow(frame_element.source, frame_show)
             cv2.waitKey(1)
 

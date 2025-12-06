@@ -8,6 +8,8 @@ class FrameElement:
         self,
         source: str,
         frame: np.ndarray,
+        frame_date_now: str,
+        frame_time_now: str,
         frame_num: float,
         frame_width: int,
         frame_height: int,
@@ -56,3 +58,5 @@ class FrameElement:
         self.detect_count = detect_count
         # -----------------------
         self.send_info_of_frame_to_db = True
+        self.frame_date_now = frame_date_now
+        self.frame_time_now = frame_time_now

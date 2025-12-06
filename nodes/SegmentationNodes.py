@@ -3,6 +3,7 @@ import torch
 import numpy as np
 import cv2
 import pandas as pd
+from PIL import Image
 
 # from utils_local.utils import profile_time
 from utils_local.utils import get_validation_augmentation as gva
@@ -17,6 +18,8 @@ from elements.FrameElement import FrameElement
 from elements.VideoEndBreakElement import VideoEndBreakElement
 import segmentation_models_pytorch as smp
 import albumentations as albu
+
+from torch_snippets import read, show
 
 
 class SegmentationNodes:
@@ -64,6 +67,27 @@ class SegmentationNodes:
         pr_mask = pr_mask.squeeze().cpu().detach().numpy()
         # строка приведения каждого пикселя с значениям 0,1,2:
         label_mask = np.argmax(pr_mask, axis=0)
+
+# -----------------------------------------смотрим_картинку----------------------------------------------
+        # print(f'Маааааааааааааааааааааааааааааааааааааска{label_mask.shape}')
+        # print(f'Карррррррррррррррррррррррррррррррррртинка{frame.shape}')
+        # lab_resize = label_mask.resize((1080, 1920))
+        # im_mask = label_mask[56:200, :]  # .crop(0, 200, 256, 56)
+        # res_img = cv2.resize(im_mask, (1080, 1920), cv2.INTER_NEAREST)
+        # im = Image.fromarray(im_mask)
+        # show(im_mask)
+        # res_im = cv2.resize(im, (1080, 1920), cv2.INTER_NEAREST)
+        # print(f'Маааааааааааааааааааааааааааааааааааааска{res_im.shape}')
+        # show(res_im)
+        # frame_ = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+        # cv2.imshow('Webcam', frame_)
+        # cv2.imshow('Webcam', label_mask)
+        # Выход из цикла по нажатию клавиши 'q'
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
+        #     break
+        cv2.waitKey(2)
+
+        # show(label_mask)
 # -----------------------------------------COEFF---------------------------------------------------------
         # 2 - это парковка, 1 - это машины
         n = 0
@@ -85,4 +109,19 @@ class SegmentationNodes:
         # real, pre = visualize_predicts(image, np.argmax(
         #     mask_gt, axis=0), label_mask, normalized=True)
 # -------------------------------------------------------------------------------------------------------
+# смотрим картинки и маски
+# #Lets plot some samples
+# rows,cols=3,3
+# # fig=plt.figure(figsize=(10,10))
+# for i in range(1,rows*cols+1):
+#     fig.add_subplot(rows,cols,i)
+#     img_path=image[i]
+#     msk_path=mask[i]
+#     img=cv2.imread(img_path)
+#     img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+#     msk=cv2.imread(msk_path)
+#     plt.imshow(img)
+#     plt.imshow(msk,alpha=0.5)
+#     plt.xticks([]), plt.yticks([])
+# plt.show()
         return frame_element
