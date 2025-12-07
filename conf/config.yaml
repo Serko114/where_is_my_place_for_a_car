@@ -3,12 +3,12 @@
 
 # -------------detection, tracking noda: VideoReader.py------------------------------------------
 pipeline:
-  save_video : False  # Сохранение итогового видео обработки
+  save_video : True  # Сохранение итогового видео обработки
   send_info_db: False  # Сохраняем ли инфо в бд (требуется заранее запустить микросервисы если ставите True)
   video_show : False
 
 video_reader:
-  src: 10_VID.mp4 #video/10_VID.mp4 #${oc.env:VIDEO_SRC} # путь до файла обработки или номер камеры (int) или ссылки на m3u8 / rtsp поток
+  src: data/video_для_детекции/26_06_2025/VID_20250625_224607.mp4 #video/10_VID.mp4 #${oc.env:VIDEO_SRC} # путь до файла обработки или номер камеры (int) или ссылки на m3u8 / rtsp поток
   # skip_secs : 0  # считываем кадры раз в <skip_secs> секунд
   # roads_info: ${oc.env:ROADS_JSON} # json файл с координатами дорог на видео
 
@@ -29,7 +29,7 @@ detection_node:
   weight_pth: models/best_detection.pt
   # weight_pth: models/best_detection.pt  # Путь до модели .pt или .engine (TensorRT)
   classes_to_detect: [0]  # весь транспорт из классов COCO
-  conf: 0.20  # Порог уверенности детектора (чем больше значение, тем меньше находит)
+  conf: 0.40  # Порог уверенности детектора (чем больше значение, тем меньше находит)
   iou: 0.5  # Порог NMS (чем больше значение, тем больше находит)
   imgsz: 640  # Ресайз при инференсе (640 по умолчанию)
   dict_clsses: {'free_space':0, }

@@ -4,7 +4,7 @@ from nodes.SegmentationNodes import SegmentationNodes
 from nodes.DetectionNodes import DetectionNodes
 from nodes.VideoShow import VideoShowDetection
 # from nodes.VideoShow import VideoShowDetection
-# from nodes.VideoSaverNode import VideoSaverNode
+from nodes.VideoSaverNode import VideoSaverNode
 # from nodes.SendInfoDBNode import SendInfoDBNode
 # import cv2
 
@@ -26,20 +26,23 @@ def main(config) -> None:
     #     send_info_db_node = SendInfoDBNode(config)
     # if video_show:
     #     show_detection_node = VideoShowDetection(config)
-    # if save_video:
-    #     video_saver_node = VideoSaverNode(config["video_saver_node"])
+    if save_video:
+        video_saver_node = VideoSaverNode(config["video_saver_node"])
 
     for frame_element in video_reader.process():
         frame_element = segmentation_node.process(frame_element)
-
-        if frame_element.coeff > 0.58:
-            print(
-                f'Возможно пустых мест нет, идем в следующий контур YOLOv8-obb, данные в БД не отправляем.')
-            frame_element = detectiom_node.process(frame_element)
-        else:
-            print(f'Места свободные есть, данные отправляем в БД.')
+        frame_element = detectiom_node.process(frame_element)
+        # if frame_element.coeff > 0.58:
+        #     print(
+        #         f'Возможно пустых мест нет, идем в следующий контур YOLOv8-obb, данные в БД не отправляем.')
+        #     frame_element = detectiom_node.process(frame_element)
+        # else:
+        #     print(f'Места свободные есть, данные отправляем в БД.')
         # # print('FUCK111!')
         frame_element = show_node.process(frame_element)
+        if save_video:
+            video_saver_node.process(frame_element)
+
         # if send_info_db:
         #     frame_element = send_info_db_node.process(frame_element)
         # print('FUCK222!')

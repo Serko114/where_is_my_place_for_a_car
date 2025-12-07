@@ -54,7 +54,9 @@ class VideoShowDetection:
         # cv2.waitKey(1)
         # -----------------------------------------------------------------
         frame_result = frame_element.frame.copy()
+        print(f'результат: {frame_element.detected_xyxy}')
         # Отображение лишь результатов детекции:
+        # if frame_element.coeff > 0.58:
         if self.show_only_yolo_detections:
             for box, class_name in zip(frame_element.detected_xyxy, frame_element.detected_cls):
                 x1, y1, x2, y2 = box
@@ -74,33 +76,33 @@ class VideoShowDetection:
                 #     thickness=self.thickness,
                 #     color=(0, 0, 255),
                 # )
-        else:
-            # Отображение результатов трекинга:
-            for box, class_name, id in zip(
-                frame_element.tracked_xyxy, frame_element.tracked_cls, frame_element.id_list
-            ):
-                x1, y1, x2, y2 = box
-                # Отрисовка прямоугольника
+        # else:
+            # # Отображение результатов трекинга:
+            # for box, class_name, id in zip(
+            #     frame_element.tracked_xyxy, frame_element.tracked_cls, frame_element.id_list
+            # ):
+            #     x1, y1, x2, y2 = box
+            #     # Отрисовка прямоугольника
 
-                random.seed(int(id))
-                color = (random.randint(0, 255), random.randint(
-                    0, 255), random.randint(0, 255))
+            #     random.seed(int(id))
+            #     color = (random.randint(0, 255), random.randint(
+            #         0, 255), random.randint(0, 255))
 
-                cv2.rectangle(frame_result, (x1, y1), (x2, y2),
-                              color, self.thickness_lines)
-                # Добавление подписи с именем класса
-                cv2.putText(
-                    frame_result,
-                    f"{self.russians_classes[frame_element.tracked_cls[0]]}",
-                    (x1, y1 - 10),
-                    fontFace=self.fontFace,
-                    fontScale=self.fontScale,
-                    thickness=self.thickness,
-                    color=(0, 0, 255),
-                )
+            #     cv2.rectangle(frame_result, (x1, y1), (x2, y2),
+            #                   color, self.thickness_lines)
+            #     # Добавление подписи с именем класса
+            #     cv2.putText(
+            #         frame_result,
+            #         f"{self.russians_classes[frame_element.tracked_cls[0]]}",
+            #         (x1, y1 - 10),
+            #         fontFace=self.fontFace,
+            #         fontScale=self.fontScale,
+            #         thickness=self.thickness,
+            #         color=(0, 0, 255),
+            #     )
         frame_element.frame_result = frame_result
-        frame_show = cv2.cvtColor(frame_result, cv2.COLOR_RGB2BGR)
-        # frame_show = frame_result
+        # frame_show = cv2.cvtColor(frame_result, cv2.COLOR_BRG2RGB)
+        frame_show = frame_result
         # frame_show = cv2.resize(frame_result.copy(),
         #                         (-1, -1), fx=self.scale, fy=self.scale)
         # --------------- блок записи видео для readme ------------------
